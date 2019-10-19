@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[61]:
-
-
 import requests
 # If you are using a Jupyter notebook, uncomment the following line.
 # %matplotlib inline
@@ -15,10 +9,6 @@ from io import BytesIO
 import os;
 import sys;
 import json
-
-
-# In[62]:
-
 
 
 # Add your Computer Vision subscription key and endpoint to your environment variables.
@@ -38,10 +28,6 @@ image_path = "/Users/weishi/Desktop/madhack/Xbuyer/Training_samples/Receipt_1.jp
 # Read the image into a byte array
 image_data = open(image_path, "rb").read()
 
-
-# In[63]:
-
-
 # Set Content-Type to octet-stream
 headers = {'Ocp-Apim-Subscription-Key': subscription_key, 'Content-Type': 'application/octet-stream'}
 params = {'language': 'unk', 'detectOrientation': 'true'}
@@ -50,16 +36,6 @@ response = requests.post(ocr_url, headers=headers, params=params, data = image_d
 response.raise_for_status()
 
 analysis = response.json()
-
-
-# In[64]:
-
-
-print(analysis)
-
-
-# In[65]:
-
 
 # Extract the word bounding boxes and text.
 line_infos = [region["lines"] for region in analysis["regions"]]
@@ -73,11 +49,6 @@ for line in line_infos:
             word_infos.append(word_info)
             textArray[i] = textArray[i] + (word_info['text']) + " "
         i = i+1
-
-textArray
-
-
-# In[66]:
 
 
 # Display the image and overlay it with the extracted text.
@@ -94,38 +65,14 @@ for word in word_infos:
     plt.text(origin[0], origin[1], text, fontsize=20, weight="bold", va="top")
 plt.axis("off")
 
-
-# In[67]:
-
-
 Item = []
 Date = []
-
-
-# In[68]:
-
 
 with open('../Backend/database.json') as json_file:
     foodData = json.load(json_file)
     for x in foodData['food']:
         Item.append(x['name'])
         Date.append(x['date'])
-
-
-# In[72]:
-
-
-Item
-
-
-# In[73]:
-
-
-Date
-
-
-# In[90]:
-
 
 output = {}
 output['food'] = []
@@ -141,10 +88,6 @@ for a in textArray:
 output
 with open('output.json','w') as outfile:
     json.dump(output, outfile)
-
-
-# In[ ]:
-
 
 
 
