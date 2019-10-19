@@ -32,8 +32,8 @@ params = {'language': 'unk', 'detectOrientation': 'true'}
 # put the byte array into your post request
 response = requests.post(ocr_url, headers=headers, params=params, data = image_data)
 response.raise_for_status()
-
 analysis = response.json()
+
 
 # Extract the word bounding boxes and text.
 line_infos = [region["lines"] for region in analysis["regions"]]
