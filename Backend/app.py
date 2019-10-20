@@ -14,8 +14,8 @@ def imagepro():
     if request.method == 'POST':
         file = request.files['file']
         print(file)
-        subscription_key = "9f4c7e5aca7541868c870e9775a078d2"
-        ocr_url = "https://westcentralus.api.cognitive.microsoft.com/" + "vision/v2.1/ocr"
+        subscription_key = "681bf9d5c5ad4e0d83625a32452ebf1c"
+        ocr_url = "https://madhack.cognitiveservices.azure.com/" + "vision/v2.1/ocr"
         # Read the image into a byte array
         #file.save(secure_filename(file.filename))
        
@@ -28,9 +28,13 @@ def imagepro():
         params = {'language': 'unk', 'detectOrientation': 'true'}
         # put the byte array into your post request
         response = requests.post(ocr_url, headers=headers, params=params, data = image_data)
-        response.raise_for_status()
+
+
 
         analysis = response.json()
+        #print(analysis)
+
+        response.raise_for_status()
 
         # Extract the word bounding boxes and text.
         line_infos = [region["lines"] for region in analysis["regions"]]
