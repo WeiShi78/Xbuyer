@@ -8,7 +8,7 @@ import requests
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/camera', methods = ['GET','POST'])
+@app.route('/image', methods = ['GET','POST'])
 def imagepro():
     #file = request.files['file']
     if request.method == 'POST':
